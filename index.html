@@ -1,1 +1,21 @@
-
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>제주 여행 지도 2026</title>
+    <!-- Leaflet 지도를 위한 CSS는 App.tsx에서 동적으로 로드하지만, 
+         뼈대 파일에서 미리 기본 설정을 정의합니다. -->
+    <style>
+      body { margin: 0; padding: 0; }
+      #root { width: 100%; height: 100vh; }
+    </style>
+  </head>
+  <body>
+    <!-- React 앱이 렌더링되어 들어갈 자리입니다. -->
+    <div id="root"></div>
+    
+    <!-- Vite 환경에서 src 폴더 안의 App.tsx를 실행하도록 연결합니다. -->
+    <script type="module" src="/src/App.tsx"></script>
+  </body>
+</html>
