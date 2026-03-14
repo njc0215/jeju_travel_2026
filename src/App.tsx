@@ -1,10 +1,24 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { createRoot } from 'react-dom/client';
 import { 
-  MapPin, Clock, Calendar, ChevronRight, ChevronLeft, 
-  Plane, Utensils, Home, Camera, Coffee, Navigation, 
-  Map as MapIcon, ExternalLink 
+  MapPin, 
+  Clock, 
+  Calendar, 
+  ChevronRight, 
+  ChevronLeft, 
+  Plane, 
+  Utensils, 
+  Home, 
+  Camera, 
+  Coffee, 
+  Map as MapIcon, 
+  ExternalLink 
 } from 'lucide-react';
 
+/**
+ * 제주도 여행 일정을 지도로 시각화하는 메인 컴포넌트입니다.
+ * 3월 28일 ~ 31일의 일정이 반영되어 있습니다.
+ */
 const App = () => {
   const [selectedDay, setSelectedDay] = useState(0);
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -18,31 +32,30 @@ const App = () => {
     return `https://map.naver.com/v5/search/${encodeURIComponent(place)}`;
   };
 
-  // image_d31eb7.png 엑셀 데이터 완벽 반영
   const itinerary = [
     {
       date: '3월 28일',
-      title: '제주 입도 및 동부 이동',
+      title: '제주 여행의 시작',
       color: '#3b82f6',
       items: [
         { time: '14:35', place: '제주국제공항', lat: 33.5113, lng: 126.4930, icon: <Plane size={14} /> },
         { time: '16:00', place: '제주명품렌터카', lat: 33.4975, lng: 126.4735, icon: <MapPin size={14} /> },
         { time: '16:30', place: '왕고모네국수', lat: 33.5350, lng: 126.6350, icon: <Utensils size={14} /> },
         { time: '19:00', place: '더포그레이스리조트', lat: 33.4750, lng: 126.9230, icon: <Home size={14} /> },
-        { time: '20:00', place: '느랑 (저녁)', lat: 33.4513, lng: 126.9179, icon: <Utensils size={14} /> },
+        { time: '20:00', place: '느랑', lat: 33.4513, lng: 126.9179, icon: <Utensils size={14} /> },
       ]
     },
     {
       date: '3월 29일',
-      title: '성산/구좌 동부 탐방',
+      title: '동부 성산/구좌 탐방',
       color: '#10b981',
       items: [
-        { time: '09:00', place: '한국폴로클럽 (고사리)', lat: 33.4350, lng: 126.7845, icon: <Camera size={14} /> },
+        { time: '09:00', place: '한국폴로클럽', lat: 33.4350, lng: 126.7845, icon: <Camera size={14} /> },
         { time: '12:00', place: '맛나식당', lat: 33.4470, lng: 126.9150, icon: <Utensils size={14} /> },
         { time: '14:00', place: '애니네 빈티지', lat: 33.5280, lng: 126.8830, icon: <Camera size={14} /> },
         { time: '15:00', place: '마이피기팬트리', lat: 33.5230, lng: 126.8950, icon: <Camera size={14} /> },
-        { time: '16:00', place: '카페? (미정)', lat: 33.5250, lng: 126.8550, icon: <Coffee size={14} /> },
-        { time: '19:00', place: '귤이랑 저녁 (미정)', lat: 33.5240, lng: 126.8560, icon: <Utensils size={14} /> },
+        { time: '16:00', place: '카페 (미정)', lat: 33.5250, lng: 126.8550, icon: <Coffee size={14} /> },
+        { time: '19:00', place: '귤이랑 저녁 (세화)', lat: 33.5240, lng: 126.8560, icon: <Utensils size={14} /> },
         { time: '21:00', place: '더포그레이스리조트', lat: 33.4750, lng: 126.9230, icon: <Home size={14} /> },
       ]
     },
@@ -52,9 +65,9 @@ const App = () => {
       color: '#f59e0b',
       items: [
         { time: '11:00', place: '산방산유채꽃명소', lat: 33.2420, lng: 126.3120, icon: <Camera size={14} /> },
-        { time: '13:00', place: '상원가든 (점심)', lat: 33.2250, lng: 126.2650, icon: <Utensils size={14} /> },
+        { time: '13:00', place: '상원가든', lat: 33.2250, lng: 126.2650, icon: <Utensils size={14} /> },
         { time: '15:00', place: '위이 카페', lat: 33.2850, lng: 126.3350, icon: <Coffee size={14} /> },
-        { time: '19:00', place: '뼈대감 본점 (저녁)', lat: 33.4120, lng: 126.2650, icon: <Utensils size={14} /> },
+        { time: '19:00', place: '뼈대감 본점', lat: 33.4120, lng: 126.2650, icon: <Utensils size={14} /> },
         { time: '21:00', place: '금능여관', lat: 33.3905, lng: 126.2285, icon: <Home size={14} /> },
       ]
     },
@@ -66,7 +79,7 @@ const App = () => {
         { time: '07:30', place: '금능여관 출발', lat: 33.3905, lng: 126.2285, icon: <Home size={14} /> },
         { time: '08:30', place: '산지해장국 노형직영점', lat: 33.4842, lng: 126.4800, icon: <Utensils size={14} /> },
         { time: '10:00', place: '제주명품렌터카', lat: 33.4975, lng: 126.4735, icon: <MapPin size={14} /> },
-        { time: '12:20', place: '제주국제공항', lat: 33.5113, lng: 126.4930, icon: <Plane size={14} /> },
+        { time: '12:20', place: '제주공항', lat: 33.5113, lng: 126.4930, icon: <Plane size={14} /> },
       ]
     }
   ];
@@ -117,12 +130,7 @@ const App = () => {
     layerGroupRef.current = L.layerGroup().addTo(map);
     mapInstanceRef.current = map;
 
-    return () => { 
-      if (mapInstanceRef.current) { 
-        mapInstanceRef.current.remove(); 
-        mapInstanceRef.current = null; 
-      } 
-    };
+    return () => { if (mapInstanceRef.current) { mapInstanceRef.current.remove(); mapInstanceRef.current = null; } };
   }, [mapLoaded, cssLoaded]);
 
   useEffect(() => {
@@ -161,7 +169,7 @@ const App = () => {
   }, [mapLoaded, selectedDay]);
 
   const currentDay = itinerary[selectedDay];
-  if (!cssLoaded) return <div className="h-screen flex items-center justify-center font-bold">로딩 중...</div>;
+  if (!cssLoaded) return <div className="h-screen flex items-center justify-center font-bold text-slate-400">지도를 그리는 중...</div>;
 
   return (
     <div className="flex flex-col h-screen bg-slate-50 font-sans text-slate-800 overflow-hidden">
@@ -176,13 +184,13 @@ const App = () => {
         <div className="flex items-center gap-3">
           <div className="bg-slate-900 p-2.5 rounded-xl text-white"><MapIcon size={20} /></div>
           <div>
-            <h1 className="text-lg font-black text-slate-900 tracking-tighter">Jeju Travel Map</h1>
-            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Naver Map Integrated</p>
+            <h1 className="text-lg font-black text-slate-900 uppercase tracking-tighter">Jeju Live Route</h1>
+            <p className="text-[10px] text-slate-500 font-bold tracking-wider uppercase">Vercel Deployment Ready</p>
           </div>
         </div>
         <div className="flex gap-2 p-1.5 bg-slate-100 rounded-2xl overflow-x-auto w-full md:w-auto hide-scrollbar">
           {itinerary.map((_, idx) => (
-            <button key={idx} onClick={() => setSelectedDay(idx)} className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 ${selectedDay === idx ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'}`}>DAY {idx + 1}</button>
+            <button key={idx} onClick={() => setSelectedDay(idx)} className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all shrink-0 ${selectedDay === idx ? 'bg-white text-slate-900 shadow-sm border border-slate-200' : 'text-slate-500'}`}>DAY {idx + 1}</button>
           ))}
         </div>
       </header>
@@ -191,7 +199,7 @@ const App = () => {
         <div className="w-full md:flex-[2] relative bg-slate-200 z-10 shrink-0" style={{ minHeight: '45vh' }}>
           <div ref={mapRef} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1 }} />
           <div className="absolute top-4 left-4 p-3 bg-white/90 backdrop-blur rounded-2xl shadow-lg border border-slate-100 z-[400] pointer-events-none">
-            <h3 className="font-black text-slate-900 text-xs">{currentDay.title}</h3>
+            <h3 className="font-black text-slate-900 text-xs truncate">{currentDay.title}</h3>
           </div>
         </div>
 
@@ -199,7 +207,7 @@ const App = () => {
           <div className="p-6 md:p-8">
             <div className="flex items-center gap-3 mb-8">
               <Calendar className="text-slate-400" size={24} />
-              <h2 className="text-2xl font-black text-slate-900 tracking-tight">{currentDay.date}</h2>
+              <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">{currentDay.date}</h2>
             </div>
 
             <div className="space-y-6 relative">
@@ -209,7 +217,7 @@ const App = () => {
                   <div className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full border-4 border-white shadow-sm z-10" style={{ backgroundColor: currentDay.color }} />
                   <div onClick={() => window.open(getNaverMapLink(item.place), '_blank')} className="p-5 rounded-2xl border-2 border-transparent bg-slate-50 hover:bg-white hover:border-slate-200 hover:shadow-md cursor-pointer group/card" >
                     <div className="flex items-center justify-between mb-3">
-                      <span className="px-2 py-1 rounded-md bg-white text-[10px] font-black text-slate-400 border border-slate-200 flex items-center gap-1">
+                      <span className="px-2 py-1 rounded-md bg-white text-[10px] font-black text-slate-400 border border-slate-200 flex items-center gap-1 shadow-sm">
                         <Clock size={10} /> {item.time}
                       </span>
                       <ExternalLink size={12} className="text-slate-300 group-hover/card:text-blue-500 transition-colors" />
@@ -218,7 +226,7 @@ const App = () => {
                       <div className="p-3 bg-white rounded-xl shadow-sm text-slate-600 shrink-0">{item.icon}</div>
                       <div className="overflow-hidden">
                         <h4 className="font-black text-sm md:text-base text-slate-800 mb-1 truncate group-hover/card:text-blue-600 transition-colors">{item.place}</h4>
-                        <p className="text-[10px] text-slate-400 font-medium tracking-tight">네이버 지도로 확인</p>
+                        <p className="text-[10px] text-slate-400 font-medium">네이버 지도로 확인</p>
                       </div>
                     </div>
                   </div>
@@ -240,5 +248,16 @@ const App = () => {
     </div>
   );
 };
+
+// --- 화면에 그리는 코드 (React 18 표준 방식) ---
+const container = document.getElementById('root');
+if (container) {
+  const root = createRoot(container);
+  root.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
+}
 
 export default App;
