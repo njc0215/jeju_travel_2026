@@ -35,7 +35,7 @@ const App = () => {
   const itinerary = [
     {
       date: '3월 28일',
-      title: '제주 여행의 시작1',
+      title: '제주 여행의 시작',
       color: '#3b82f6',
       items: [
         { time: '14:35', place: '제주국제공항', lat: 33.5113, lng: 126.4930, icon: <Plane size={14} /> },
